@@ -1,6 +1,7 @@
 package com.jumbletree.docx5j.xlsx.builders;
 
 import org.docx4j.openpackaging.exceptions.Docx4JException;
+import org.xlsx4j.sml.CTCellFormula;
 import org.xlsx4j.sml.Cell;
 import org.xlsx4j.sml.STCellType;
 
@@ -8,7 +9,7 @@ import com.jumbletree.docx5j.xlsx.CommentPosition;
 
 public class CellBuilder {
 
-	private Cell cell;
+	Cell cell;
 	private RowBuilder parent;
 	private WorkbookBuilder origin;
 	private WorksheetBuilder sheet;
@@ -60,7 +61,15 @@ public class CellBuilder {
 	}
 
 	public CellBuilder value(double number) {
-		cell.setV(String.valueOf(number));
+		if (Double.isNaN(number) || Double.isInfinite(number)) {
+			cell.setT(STCellType.E);
+			CTCellFormula formula = new CTCellFormula();
+			formula.setValue("NA()");
+			cell.setF(formula);
+			cell.setV("#N/A");
+		} else {
+			cell.setV(String.valueOf(number));
+		}
 		return this;
 	}
 
