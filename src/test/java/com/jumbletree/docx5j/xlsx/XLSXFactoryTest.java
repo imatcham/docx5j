@@ -7,8 +7,6 @@ import javax.xml.bind.JAXBException;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.junit.Test;
 
-import com.jumbletree.docx5j.xlsx.XLSXFile;
-
 public class XLSXFactoryTest {
 
 	@Test
